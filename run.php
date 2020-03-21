@@ -1,6 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'LatestData.php';
 if (!file_exists('config.php')) {
     logger('No config file found! Create a config.php based on config.example.php');
     die;
@@ -43,9 +44,18 @@ $body = (string)$response->getBody();
 
 preg_match("/\'iCurriculumJSON\': (.*)/m", $body, $matches);
 
-$data = json_decode(trim(trim($matches[1]), ','), true);
+$latest = new LatestData();
+$currentData = json_decode(trim(trim($matches[1]), ','), true);
 
-var_dump($data);
+$difference = array_diff($currentData, $latest->getLatestData());
+if (!empty($difference)) {
+    logger('There is a difference!');
+    var_dump($difference); // todo: send this in an email
 
+    // todo: write new latest data here
+    $latest->setLatestData($currentData);
+} else {
+    logger('No difference found, not taking any action.');
+}
 
 logger('Done!');
