@@ -6,11 +6,11 @@ require 'functions.php';
 
 logger('------------- New execution starting now! -------------');
 
-if (!file_exists('config.php')) {
+if (!file_exists( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php')) {
     logger('No config file found! Create a config.php based on config.example.php');
     die;
 }
-$config = require('config.php');
+$config = require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.php');
 
 $jar = new \GuzzleHttp\Cookie\CookieJar;
 $client = new GuzzleHttp\Client([
