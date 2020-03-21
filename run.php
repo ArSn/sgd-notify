@@ -2,15 +2,12 @@
 
 require 'vendor/autoload.php';
 require 'LatestData.php';
+require 'functions.php';
 if (!file_exists('config.php')) {
     logger('No config file found! Create a config.php based on config.example.php');
     die;
 }
 $config = require('config.php');
-
-function logger($value) {
-    echo $value . PHP_EOL;
-}
 
 $jar = new \GuzzleHttp\Cookie\CookieJar;
 $client = new GuzzleHttp\Client([
@@ -47,12 +44,15 @@ preg_match("/\'iCurriculumJSON\': (.*)/m", $body, $matches);
 $latest = new LatestData();
 $currentData = json_decode(trim(trim($matches[1]), ','), true);
 
-$difference = array_diff($currentData, $latest->getLatestData());
+$difference = array_diff_recursive($currentData, $latest->getLatestData());
 if (!empty($difference)) {
     logger('There is a difference!');
-    var_dump($difference); // todo: send this in an email
 
-    // todo: write new latest data here
+    if (sendMail($difference)) {
+        logger('Sent notification mail successfuly.');
+    } else {
+        logger('Could not send notification mail.');
+    }
     $latest->setLatestData($currentData);
 } else {
     logger('No difference found, not taking any action.');

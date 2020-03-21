@@ -1,5 +1,5 @@
 {
-    "name": "ArSn/sgd-notify",
+    "name": "arsn/sgd-notify",
     "description": "SGD notify tool",
     "type": "project",
     "license": "MIT",
@@ -10,7 +10,8 @@
         }
     ],
     "require": {
+        "ext-json": "*",
         "guzzlehttp/guzzle": "~6.0",
-        "ext-json": "*"
+        "swiftmailer/swiftmailer": "^6.0"
     }
 }
