@@ -2,8 +2,13 @@
 
 function logger($value)
 {
-    // todo: add proper logging
-    echo $value . PHP_EOL;
+    $msg = date('Y-m-d H:i:s') . ': ' . $value . PHP_EOL;
+
+    $fh = fopen('log.txt', 'a');
+    fwrite($fh, $msg);
+    fclose($fh);
+
+    echo $msg;
 }
 
 // taken from https://www.php.net/manual/en/function.array-diff.php#91756

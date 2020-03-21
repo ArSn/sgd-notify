@@ -3,6 +3,9 @@
 require 'vendor/autoload.php';
 require 'LatestData.php';
 require 'functions.php';
+
+logger('------------- New execution starting now! -------------');
+
 if (!file_exists('config.php')) {
     logger('No config file found! Create a config.php based on config.example.php');
     die;
@@ -46,7 +49,7 @@ $currentData = json_decode(trim(trim($matches[1]), ','), true);
 
 $difference = array_diff_recursive($currentData, $latest->getLatestData());
 if (!empty($difference)) {
-    logger('There is a difference!');
+    logger('There is a difference: ' . var_export($difference, true));
 
     if (sendMail($difference)) {
         logger('Sent notification mail successfuly.');
