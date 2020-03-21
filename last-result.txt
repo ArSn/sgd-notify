@@ -1,1 +1,0 @@
-This is kept in repo to have the permissions versioned.
