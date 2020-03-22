@@ -4,7 +4,7 @@ function logger($value)
 {
     $msg = date('Y-m-d H:i:s') . ': ' . $value . PHP_EOL;
 
-    $fh = fopen('log.txt', 'a');
+    $fh = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'log.txt', 'a');
     fwrite($fh, $msg);
     fclose($fh);
 

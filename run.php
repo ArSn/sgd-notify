@@ -1,5 +1,8 @@
 <?php
 
+// disabling just in time as it is disabled on DH
+ini_set('pcre.jit', '0');
+
 require 'vendor/autoload.php';
 require 'LatestData.php';
 require 'functions.php';
